@@ -9,7 +9,6 @@ interface personOptions {
   Zip: number;
   Occupation: string;
   hourlyWage: number;
-  Certs: string[];
 }
 
 //Class creation
@@ -92,11 +91,12 @@ class Person {
   sethourlyWage(hourlyWage: number): void {
     this.hourlyWage = hourlyWage;
   }
-  getCerts(): string {
-    return this.Occupation;
+  getCerts(): string[] {
+    return this.Certs;
   }
-  setCerts(Certs: string): void {
-    // this.Certs = Certs;
+  setCerts(...Certs: string[]) {
+    this.Certs = Certs;
+    addCerts();
   }
   //methods
   getFullName(): string {
@@ -118,6 +118,19 @@ class Person {
       this.Occupation
     );
   }
+  getWages(hoursWorked?: number): number {
+    if (hoursWorked) {
+      return this.hourlyWage * hoursWorked;
+    } else {
+      return this.hourlyWage * 40;
+    }
+  }
+}
+function addCerts(...certs: string[]): void {
+  for (let cert in certs) {
+    certs.push(cert);
+  }
+  this.certs = certs;
 }
 
 function sayHello(person: string): string {
@@ -155,12 +168,23 @@ var user3 = new Person(
   "Accounts Manager",
   30
 );
-var user4 = "Something";
-var user5 = "something";
+var user4 = new Person(
+  "Jim",
+  "Dean",
+  26,
+  84355348273,
+  "NC",
+  282526,
+  "Accounts",
+  30
+);
+
+var user5 = user3;
 
 document.getElementById("para").innerHTML = sayHello(user);
 document.getElementById("person1").innerHTML = user1.getFullName();
 document.getElementById("person2").innerHTML = user2.getLocation();
 document.getElementById("person3").innerHTML = user3.getContactInfo();
-// document.getElementById("hour").innerHTML = sayHello(user4);
-// document.getElementById("certi").innerHTML = sayHello(user5);
+document.getElementById("wages").innerHTML = user4.getWages().toString();
+user5.setCerts("MBA");
+document.getElementById("certi").innerHTML = user5.getCerts().toString();

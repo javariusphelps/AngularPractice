@@ -61,10 +61,15 @@ var Person = /** @class */ (function () {
         this.hourlyWage = hourlyWage;
     };
     Person.prototype.getCerts = function () {
-        return this.Occupation;
+        return this.Certs;
     };
-    Person.prototype.setCerts = function (Certs) {
-        // this.Certs = Certs;
+    Person.prototype.setCerts = function () {
+        var Certs = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            Certs[_i] = arguments[_i];
+        }
+        this.Certs = Certs;
+        addCerts();
     };
     //methods
     Person.prototype.getFullName = function () {
@@ -82,8 +87,26 @@ var Person = /** @class */ (function () {
             " " +
             this.Occupation);
     };
+    Person.prototype.getWages = function (hoursWorked) {
+        if (hoursWorked) {
+            return this.hourlyWage * hoursWorked;
+        }
+        else {
+            return this.hourlyWage * 40;
+        }
+    };
     return Person;
 }());
+function addCerts() {
+    var certs = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        certs[_i] = arguments[_i];
+    }
+    for (var cert in certs) {
+        certs.push(cert);
+    }
+    this.certs = certs;
+}
 function sayHello(person) {
     return "Hello" + " " + person;
 }
@@ -91,11 +114,12 @@ var user = "Super Student";
 var user1 = new Person("Patience", "Kinnard", 29, 8435552637, "NC", 28269, "Loans Officer", 24);
 var user2 = new Person("Richard", "Pindercush", 22, 8435524356, "NC", 28269, "Bank Teller", 16);
 var user3 = new Person("Pat", "Beverly", 30, 8435534567, "NC", 28269, "Accounts Manager", 30);
-var user4 = "Something";
-var user5 = "something";
+var user4 = new Person("Jim", "Dean", 26, 84355348273, "NC", 282526, "Accounts", 30);
+var user5 = user3;
 document.getElementById("para").innerHTML = sayHello(user);
 document.getElementById("person1").innerHTML = user1.getFullName();
 document.getElementById("person2").innerHTML = user2.getLocation();
 document.getElementById("person3").innerHTML = user3.getContactInfo();
-// document.getElementById("hour").innerHTML = sayHello(user4);
-// document.getElementById("certi").innerHTML = sayHello(user5);
+document.getElementById("wages").innerHTML = user4.getWages().toString();
+user5.setCerts("MBA");
+document.getElementById("certi").innerHTML = user5.getCerts().toString();
